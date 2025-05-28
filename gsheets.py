@@ -25,20 +25,20 @@ def get_sheet():
         sheet = client.open("planilha_PDA").sheet1
         # Garante que o cabeçalho está lá (opcional)
         if not sheet.row_values(1):
-            sheet.append_row(["nome", "email"])
+            sheet.append_row(["nome", "email", "Palestra"])
         return sheet
     except Exception as e:
         st.error(f"Erro ao acessar a planilha: {e}")
         return None
 
-def add_contato(nome, email):
+def add_contato(nome, email, palestra):
     sheet = get_sheet()
     if sheet:
         contatos = listar_contatos()
         for contato in contatos:
-            if contato.get("nome") == nome and contato.get("email") == email:
+            if contato.get("nome") == nome and contato.get("email") == email and contato.get("Palestra") == palestra:
                 return False  # Já existe
-        sheet.append_row([nome, email])
+        sheet.append_row([nome, email, palestra])
         return True
     return False
 
